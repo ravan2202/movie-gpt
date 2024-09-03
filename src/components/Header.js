@@ -6,12 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onAuthStateChanged, signOut, } from 'firebase/auth';
 import { addUser , removeUser} from '../utils/userSlice'
 import { LOGO } from '../utils/constants';
+import { toggleGptSearchView } from '../utils/gptSlice';
+
 
 const Header = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const user = useSelector(store => store.user)
+
+  const showGptSearch = useSelector ((store) => store.gpt.showGptSearch)
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -35,6 +39,10 @@ const Header = () => {
       return () => unsubscribe()
     },[])
 
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView())
+  } 
+
   return (
     <div className='absolute top-0 left-0  w-screen px-8 py-2 bg-gradient-to-b from-black z-40 flex justify-between'>
         <img 
@@ -44,8 +52,12 @@ const Header = () => {
         /> 
 
         {user && (
-          <div className='flex px-1 py-4'>
-             <button
+          <div className='flex items-center px-1 p-4'>
+            <button className='h-10 px-4 my-2 mx-6  bg-red-700 text-white rounded-lg'
+            onClick={handleGptSearchClick}>
+            {showGptSearch ? "Home" : "GPT Search"}
+            </button>
+          <button
             onClick={handleSignOut}
           >
             <svg
@@ -64,7 +76,7 @@ const Header = () => {
               />
             </svg>
           </button>
-          <img className='px-1 mx-6' src={user?.photoURL} alt="user_avatar"/> 
+          <img className='m-6' src={user?.photoURL} alt="user_avatar"/> 
         </div>
         )}
     </div>
