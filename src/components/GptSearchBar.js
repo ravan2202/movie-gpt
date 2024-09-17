@@ -23,7 +23,7 @@ const GptSearchBar = () => {
       const model = await genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const prompt = "Act as a movie recommendation system and suggest some movies for the query :" + 
     searchText.current.value + 
-    "only give me names of 5 movies , comma seperated like the example given ahead .Example Result:Gadar,Don,Golmaal,Koi Mil Gaya,Sholay";
+    "only give me names of 10 movies , comma seperated like the example given ahead .Example Result:Gadar,Don,Golmaal,Koi Mil Gaya,Sholay";
       const result = await model.generateContent([prompt]);
       // console.log(result.response.text());
       const genAIText = await result.response.text();
@@ -32,7 +32,7 @@ const GptSearchBar = () => {
 
       const promiseArray = genAIresult.map(movie => searchMovieTMDB(movie))
       const tmdbResults = await Promise.all(promiseArray)
-      console.log(tmdbResults);
+      // console.log(tmdbResults);
       dispatch(addGptMoviesResults({movieNames:genAIresult,movieResults:tmdbResults}))
 
     } catch (error) {
@@ -44,19 +44,19 @@ const GptSearchBar = () => {
   
 
   return (
-    <div className='pt-[5%] flex justify-center'>
+    <div className='pt-[35%] md:pt-[7%] flex justify-center'>
       <form
-        className='w-1/2 bg-black grid grid-cols-12 rounded-lg'
+        className='w-[90%]  md:w-1/2 bg-black grid grid-cols-12 rounded-lg'
         onSubmit={(e) => e.preventDefault()} // Correctly prevent form submission
       >
         <input
           ref={searchText}
           type='text'
-          className='p-3 m-3 col-span-10 rounded-lg'
+          className='p-3 m-3 col-span-8 md:col-span-10 rounded-lg'
           placeholder='What would you like to watch today?'
         />
         <button
-          className='col-span-2 m-4 px-4 bg-red-700 text-white rounded-lg'
+          className='col-span-4 md:col-span-2 m-4 px-4 bg-red-700 text-white rounded-lg'
           onClick={handleGPTSearchClick}
         >
           Search

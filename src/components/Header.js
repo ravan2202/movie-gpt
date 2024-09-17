@@ -44,16 +44,16 @@ const Header = () => {
   } 
 
   return (
-    <div className='absolute top-0 left-0  w-screen px-8 py-2 bg-gradient-to-b from-black z-40 flex justify-between'>
+    <div className='absolute top-0 left-0  w-screen px-8 py-2 bg-gradient-to-b from-black z-40 flex flex-col md:flex-row justify-between'>
         <img 
-        className='w-44'
+        className=' w-44 md:mx-0 mx-auto'
         src= {LOGO}
         alt='logo'
         /> 
 
         {user && (
-          <div className='flex items-center px-1 p-4'>
-            <button className='h-10 px-4 my-2 mx-6  bg-red-700 text-white rounded-lg'
+          <div className='flex items-center justify-center md:justify-between px-1 md:p-4'> 
+            <button className='h-10 px-4  my-1 md:my-2  mx-6  bg-red-700 text-white rounded-lg'
             onClick={handleGptSearchClick}>
             {showGptSearch ? "Home" : "GPT Search"}
             </button>
@@ -76,7 +76,7 @@ const Header = () => {
               />
             </svg>
           </button>
-          <img className='m-6' src={user?.photoURL} alt="user_avatar"/> 
+          <img className=' mx-6 md:m-6' src={user?.photoURL} alt="user_avatar"/> 
         </div>
         )}
     </div>
